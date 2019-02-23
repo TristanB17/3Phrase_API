@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_22_023534) do
+ActiveRecord::Schema.define(version: 2019_02_23_015415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,20 @@ ActiveRecord::Schema.define(version: 2019_02_22_023534) do
   create_table "jwt_blacklist", force: :cascade do |t|
     t.string "jti", null: false
     t.index ["jti"], name: "index_jwt_blacklist_on_jti"
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string "lang_name"
+    t.string "abbreviation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_languages", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "language_id"
+    t.index ["language_id"], name: "index_user_languages_on_language_id"
+    t.index ["user_id"], name: "index_user_languages_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -33,4 +47,6 @@ ActiveRecord::Schema.define(version: 2019_02_22_023534) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "user_languages", "languages"
+  add_foreign_key "user_languages", "users"
 end
