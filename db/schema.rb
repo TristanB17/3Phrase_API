@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_022608) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
-    t.integer "likes"
+    t.integer "likes", default: 0
     t.bigint "translation_id"
     t.index ["translation_id"], name: "index_comments_on_translation_id"
   end
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_022608) do
   create_table "translations", force: :cascade do |t|
     t.bigint "phrase_id"
     t.bigint "user_id"
-    t.integer "likes"
+    t.integer "likes", default: 0
     t.text "output"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
